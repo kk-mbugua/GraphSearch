@@ -4,6 +4,7 @@ import Settings from "./utilities/settings";
 import SearchGrid from "./components/searchGrid";
 import Options from "./components/options";
 import { Grid } from "@material-ui/core";
+import Axios from "axios";
 
 class App extends Component {
   state = {};
@@ -12,11 +13,20 @@ class App extends Component {
     this.settings = new Settings(20, 20);
   }
 
-  start= async () => {
-      await this.settings.runSearch().then(()=>{
-        this.forceUpdate()
-      })
-      
+  componentDidMount() {
+    this.getDataAxios();
+  }
+
+  async getDataAxios() {
+    const response =
+      await Axios.get("/api/search")
+    console.log("response", response.data)
+  }
+
+  start = async () => {
+    await this.settings.runSearch().then(() => {
+      this.forceUpdate();
+    });
   };
 
   render() {
